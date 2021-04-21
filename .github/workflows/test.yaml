@@ -24,4 +24,4 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: Say hello world
-      uses: echo "Welcome to the Github Actions workshop !"
+      uses: echo Welcome to the Github Actions workshop !
