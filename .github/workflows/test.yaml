@@ -41,5 +41,21 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: my-artifact create
-        run: echo placeholder > tests/gitaction_result.txt 
-        path: tests/gitaction_result.txt 
+        run: echo placeholder > tests/unit_test.txt 
+        path: tests/unit_test.txt
+
+  test_third:
+    name: functionnal-test
+    container: epitechcontent/epitest-docker
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: functional-test
+      run: ./tests/functional-test.sh
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact create
+        run: echo placeholder > tests/functional_test.txt 
+        path: tests/functional_test.txt 
