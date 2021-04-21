@@ -41,4 +41,5 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: my-artifact create
+        run: echo placeholder > tests/gitaction_result.txt 
         path: tests/gitaction_result.txt 
