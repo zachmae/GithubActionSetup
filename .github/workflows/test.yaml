@@ -38,8 +38,7 @@ jobs:
       run: make tests_run
     - name: coverage
       run: make coverage
-    - name: my-artifact upload
-      uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v2
         with:
           name: my-artifact create
-          run: tests/gitaction_result.txt 
+          path: tests/gitaction_result.txt 
