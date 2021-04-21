@@ -52,8 +52,10 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v2
+    - name: compile
+      run: make
     - name: functional-test
-      run: ./tests/functional-test.sh
+      run: ./functional-test.sh
     - uses: actions/upload-artifact@v2
       with:
         name: my-artifact create
