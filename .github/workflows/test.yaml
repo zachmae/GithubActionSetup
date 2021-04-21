@@ -35,6 +35,6 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: unit-test
-      run: make test_run
+      run: make tests_run
     - name: coverage
       run: make coverage
