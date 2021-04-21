@@ -15,7 +15,7 @@ defaults:
 jobs:
   test_server:
     name: hello-world
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
     - name: checkout
@@ -26,7 +26,8 @@ jobs:
   test_second:
     name: unit-test
     container: epitechcontent/epitest-docker
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
     - name: checkout
@@ -44,7 +45,7 @@ jobs:
   test_third:
     name: functionnal-test
     container: epitechcontent/epitest-docker
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
     - name: checkout
