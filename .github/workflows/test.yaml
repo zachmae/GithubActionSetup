@@ -33,14 +33,17 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: unit-test
-      run: make tests_run
+      run: make tests_run > result_unit_test ; cat result_unit_test
     - name: coverage
-      run: make coverage
-    - uses: actions/upload-artifact@v2
+      run: make coverage > result_coverage ; cat result_coverage
+    - uses: actions/upload-artifact@v2.2.3
       with:
-        name: my-artifact create
-        run: echo placeholder > tests/unit_test.txt 
-        path: tests/unit_test.txt
+        name: result_unit_test
+        path: ./result_unit_test
+    - uses: actions/upload-artifact@v2.2.3
+      with:
+        name: result_coverage
+        path: ./result_coverage
 
   test_third:
     name: functionnal-test
@@ -53,9 +56,8 @@ jobs:
     - name: compile
       run: make
     - name: functional-test
-      run: ./functional-test.sh
-    - uses: actions/upload-artifact@v2
+      run: ./functional-test.sh > result_functional_test ; cat result_functional_test
+    - uses: actions/upload-artifact@v2.2.3
       with:
-        name: my-artifact create
-        run: echo placeholder > tests/functional_test.txt 
-        path: tests/functional_test.txt 
+        name: result_functiona_ltest
+        path: ./result_functiona_ltest 
