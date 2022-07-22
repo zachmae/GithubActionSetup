@@ -26,7 +26,7 @@ jobs:
       - name: date
         run: date
       - name: checkout
-        run: actions/checkout@v3
+        run: actions/checkout@v2
       - name: branch
         run: echo ${GITHUB_REF##*/}
       - name: size
