@@ -30,7 +30,7 @@ jobs:
       ## SETUP THE REPOSITORY
       - name: informations
         run: |
-          "echo Welcome to Zachmae\'s workflow"
+          "echo Welcome to Zachmae workflow"
           "echo Repository:\n\t'$GITHUB_REPOSITORY'"
           "echo Branch:\n\t${GITHUB_REF##*/}"
           "echo Size:"
