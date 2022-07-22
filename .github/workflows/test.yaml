@@ -18,50 +18,43 @@ defaults:
     shell: bash
 
 jobs:
-  initialize:
+  linux_testing_setup:
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
-    timeout-minutes: 3
+    timeout-minutes: 5
     steps:
-      - name: date
-        run: date
+      ## GET THE REPOSITORY
       - name: checkout
         uses: actions/checkout@v3
-      - name: branch
-        run: echo ${GITHUB_REF##*/}
-      - name: size
-        run: du -skh --exclude=".git"
 
-  build:
-    runs-on: ubuntu-latest
-    ## TIMEOUT IN MINUTES (may change depending of the language like cpp):
-    if: ${{ always() }}
-    needs: initialize
-    timeout-minutes: 3
-    steps:
-      - name: compile
+      ## SETUP THE REPOSITORY
+      - name: informations
+        run: |
+          "echo Welcome to Zachmae's workflow"
+          "echo Repository:\n\t'$GITHUB_REPOSITORY'"
+          "echo Branch:\n\t${GITHUB_REF##*/}"
+          "echo Size:"
+          "du -skh --exclude=.git --exclude=.github --exclude=.gitignore"
+      - name: fclean_repo
+        run: make fclean
+
+      ## BUILD THE PROJECT
+      - name: build_repo
         run: make
+      - name: clean_repo
+        run: make clean
 
-  ## FUNCTIONNAL TESTS
-  functionnal_test:
-    runs-on: ubuntu-latest
-    if: ${{ success() }}
-    needs: [ initialize, build ]
-    steps:
-      - name: functionnal_test
+      ## TEST THE PROJECT
+        # functionnal
+      - name: functional_tests
         run: ./tests/functional-test.sh > result_bash_tests ; cat result_bash_tests
-      - name: Artifact functionnal
+      - name: Artifact functional
         uses: actions/upload-artifact@v3
         with:
           name: result_bash_tests
           path: ./result_bash_tests
 
-  ## UNITS TESTS
-  unit_test:
-    runs-on: ubuntu-latest
-    if: ${{ success() }}
-    needs: [ initialize, build ]
-    steps:
+        # unitary
       - name: unit test
         run: make tests_run > result_unit_tests ; cat result_unit_tests
       - name: Artifact unit
