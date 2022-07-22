@@ -1,63 +1,71 @@
-name: Tests
+## NAME OF THE WORKFLOW
+name: workflow-name
 
+## CONDITIONS FOR THE WORKFLOW TO RUN:
 on:
-  push: 
-    branches: [main, master, dev]
-  pull_request: 
-    branches: [main, master, dev]
+  push:
+    branches:
+      - '!ga-ignore*'
+  pull_request:
+    branches:
+      - '!ga-ignore*'
 
   workflow_dispatch:
 
+## DEFAULTS FOR THE WORKFLOW:
 defaults:
   run:
     shell: bash
 
 jobs:
-  test_server:
-    name: hello-world
+  initialize:
     runs-on: ubuntu-latest
-
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: Say hello world
-      run: echo "Welcome to the Github Actions workshop !"
-    
-  test_second:
-    name: unit-test
     container: epitechcontent/epitest-docker
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    timeout-minutes: 1
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: unit-test
-      run: make tests_run > result_unit_test ; cat result_unit_test
-    - name: coverage
-      run: make coverage > result_coverage ; cat result_coverage
-    - uses: actions/upload-artifact@v2.2.3
-      with:
-        name: result_unit_test
-        path: ./result_unit_test
-    - uses: actions/upload-artifact@v2.2.3
-      with:
-        name: result_coverage
-        path: ./result_coverage
+      - name: date
+        run: date
+      - name: checkout
+        run: actions/checkout@v3
+      - name: branch
+        run: echo ${GITHUB_REF##*/}
+      - name: size
+        run: du -skh --exclude=".git"
 
-  test_third:
-    name: functionnal-test
-    container: epitechcontent/epitest-docker
+  build:
     runs-on: ubuntu-latest
-
+    ## TIMEOUT IN MINUTES (may change depending of the language like cpp):
+    if: ${{ always() }}
+    needs: initialize
+    timeout-minutes: 3
     steps:
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: compile
-      run: make
-    - name: functional-test
-      run: ./functional-test.sh > result_functional_test ; cat result_functional_test
-    - uses: actions/upload-artifact@v2.2.3
-      with:
-        name: result_functional_test
-        path: ./result_functional_test 
+      - name: compile
+        run: make
+
+  ## FUNCTIONNAL TESTS
+  functionnal_test:
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    needs: [ initialize, build ]
+    steps:
+      - name: functionnal_test
+        run: ./tests/bash_tests.sh > result_bash_tests ; cat result_bash_tests
+      - name: Artifact functionnal
+        uses: actions/upload-artifact@v3
+        with:
+          name: result_bash_tests
+          path: ./result_bash_tests
+
+  ## UNITS TESTS
+  unit_test:
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    needs: [ initialize, build ]
+    steps:
+      - name: unit test
+        run: make tests_run > result_unit_tests ; cat result_unit_tests
+      - name: Artifact unit
+        uses: actions/upload-artifact@v3
+        with:
+          name: result_unit_tests
+          path: ./result_unit_tests
