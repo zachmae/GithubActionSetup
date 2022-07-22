@@ -21,7 +21,7 @@ jobs:
   initialize:
     runs-on: ubuntu-latest
     container: epitechcontent/epitest-docker
-    timeout-minutes: 1
+    timeout-minutes: 3
     steps:
       - name: date
         run: date
