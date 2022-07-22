@@ -19,6 +19,7 @@
  */
 size_t do_op(long int nb1, char op, long int nb2)
 {
+    nb1 += 1;
     switch (op) {
         case ADD:
             return nb1 + nb2;
