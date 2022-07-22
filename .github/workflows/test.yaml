@@ -4,11 +4,11 @@ name: workflow-name
 ## CONDITIONS FOR THE WORKFLOW TO RUN:
 on:
   push:
-    branches:
-      - '!ga-ignore*'
+    branches-ignore:
+      - 'ga-ignore*'
   pull_request:
-    branches:
-      - '!ga-ignore*'
+    branches-ignore:
+      - 'ga-ignore*'
 
   workflow_dispatch:
 
