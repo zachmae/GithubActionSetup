@@ -70,7 +70,7 @@ jobs:
     needs: [ linux_testing_setup ]
     if: |
       always() &&
-      !contains(needs.*.result, 'failure') &&
+      !contains(needs.*.result, ${{ 'failure' }} ) &&
       ${GITHUB_REF##*/} == 'master'
 
     env:
