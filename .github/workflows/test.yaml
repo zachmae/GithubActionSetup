@@ -30,11 +30,11 @@ jobs:
       ## SETUP THE REPOSITORY
       - name: informations
         run: |
-          "echo Welcome to Zachmae workflow"
-          "echo Repository:\n\t'$GITHUB_REPOSITORY'"
-          "echo Branch:\n\t${GITHUB_REF##*/}"
-          "echo Size:"
-          "du -skh --exclude=.git --exclude=.github --exclude=.gitignore"
+          echo Welcome to Zachmae workflow \
+          echo Repository:\n\t'$GITHUB_REPOSITORY' \
+          echo Branch:\n\t${GITHUB_REF##*/} \
+          echo Size: \
+          du -skh --exclude=.git --exclude=.github --exclude=.gitignore \
       - name: fclean_repo
         run: make fclean
 
