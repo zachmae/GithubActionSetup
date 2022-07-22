@@ -47,7 +47,7 @@ jobs:
       ## TEST THE PROJECT
         # functionnal
       - name: functional_tests
-        run: ./tests/functional-test.sh > result_bash_tests ; cat result_bash_tests
+        run: ./functional-test.sh > result_bash_tests ; cat result_bash_tests
       - name: Artifact functional
         uses: actions/upload-artifact@v3
         with:
