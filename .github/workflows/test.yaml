@@ -68,9 +68,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     needs: [ linux_testing_setup ]
-    if: |
-      !contains(needs.*.result, 'failure') &&
-      ${GITHUB_REF##*/} == 'master'
+    if: (!contains(needs.*.result, 'failure')) && ${GITHUB_REF##*/} == 'master'
+
 
     env:
       Username: zachmae
