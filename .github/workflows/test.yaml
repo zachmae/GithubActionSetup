@@ -49,7 +49,7 @@ jobs:
     needs: [ initialize, build ]
     steps:
       - name: functionnal_test
-        run: ./tests/bash_tests.sh > result_bash_tests ; cat result_bash_tests
+        run: ./tests/functionnal_test.sh > result_bash_tests ; cat result_bash_tests
       - name: Artifact functionnal
         uses: actions/upload-artifact@v3
         with:
